@@ -1,1 +1,0 @@
-# kp_metadata_framework_ex
