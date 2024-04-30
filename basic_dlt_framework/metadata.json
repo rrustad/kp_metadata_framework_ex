@@ -1,0 +1,32 @@
+{
+  "1":{
+    "tables":{
+      "table1":{
+        "pk":"id_1",
+        "target":"table1_"
+      },
+      "table2":{
+        "pk":"id_2",
+        "target":"table2_"
+      }
+    },
+    "cluster":{
+        "num_workers": 8
+    }
+  },
+  "2":{
+    "tables":{
+      "table3":{
+        "pk":"id_3",
+        "target":"table3_"
+      },
+      "table4":{
+        "pk":"id_4",
+        "target":"table4_"
+      }
+    },
+    "cluster":{
+        "num_workers": 4
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "pipeline_type": "WORKSPACE",
+  "clusters": [
+    {
+      "label": "default",
+      "autoscale": {
+        "min_workers": 1,
+        "max_workers": 5,
+        "mode": "ENHANCED"
+      }
+    },
+    {
+      "label": "maintenance"
+    }
+  ],
+  "development": true,
+  "continuous": false,
+  "channel": "CURRENT",
+  "photon": true,
+  "libraries": [
+    {
+      "notebook": {
+        "path": "/Repos/riley.rustad@databricks.com/kp_metadata_framework_ex/basic_dlt_framework/main"
+      }
+    }
+  ],
+  "name": "metadata_framework_batch1",
+  "edition": "ADVANCED",
+  "catalog": "kp_catalog",
+  "configuration": {
+    "table_map": "{\"table1\": \"table1_\", \"table2\": \"table2_\"}"
+  },
+  "target": "metadata_framework",
+  "data_sampling": false
+}

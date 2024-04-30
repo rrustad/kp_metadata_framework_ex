@@ -1,0 +1,42 @@
+{
+  "name": "metadata_framework_job_2",
+  "tasks": [
+    {
+      "task_key": "table3",
+      "run_if": "ALL_SUCCESS",
+      "notebook_task": {
+        "notebook_path": "/Repos/riley.rustad@databricks.com/kp_metadata_framework_ex/main",
+        "base_parameters": {
+          "source": "table3",
+          "target": "table3_"
+        },
+        "source": "WORKSPACE"
+      },
+      "job_cluster_key": "batch2_cluster"
+    },
+    {
+      "task_key": "table4",
+      "run_if": "ALL_SUCCESS",
+      "notebook_task": {
+        "notebook_path": "/Repos/riley.rustad@databricks.com/kp_metadata_framework_ex/main",
+        "base_parameters": {
+          "source": "table4",
+          "target": "table4_"
+        },
+        "source": "WORKSPACE"
+      },
+      "job_cluster_key": "batch2_cluster"
+    }
+  ],
+  "job_clusters": [
+    {
+      "job_cluster_key": "batch2_cluster",
+      "new_cluster": {
+        "spark_version": "13.3.x-scala2.12",
+        "instance_pool_id": "0802-143749-grail729-pool-hPaknFfC",
+        "data_security_mode": "USER_ISOLATION",
+        "num_workers": 4
+      }
+    }
+  ]
+}
