@@ -5,7 +5,7 @@
       "label": "default",
       "autoscale": {
         "min_workers": 1,
-        "max_workers": 5,
+        "max_workers": 4,
         "mode": "ENHANCED"
       }
     },
@@ -28,7 +28,7 @@
   "edition": "ADVANCED",
   "catalog": "kp_catalog",
   "configuration": {
-    "table_map": "{\"table3\": \"table3_\", \"table4\": \"table4_\"}"
+    "table_map": "{\"table3\": \"table3__\", \"table4\": \"table4__\"}"
   },
   "target": "metadata_framework",
   "data_sampling": false

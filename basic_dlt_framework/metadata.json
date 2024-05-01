@@ -3,11 +3,11 @@
     "tables":{
       "table1":{
         "pk":"id_1",
-        "target":"table1_"
+        "target":"table1__"
       },
       "table2":{
         "pk":"id_2",
-        "target":"table2_"
+        "target":"table2__"
       }
     },
     "cluster":{
@@ -18,11 +18,11 @@
     "tables":{
       "table3":{
         "pk":"id_3",
-        "target":"table3_"
+        "target":"table3__"
       },
       "table4":{
         "pk":"id_4",
-        "target":"table4_"
+        "target":"table4__"
       }
     },
     "cluster":{

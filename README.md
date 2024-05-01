@@ -16,12 +16,19 @@ There are two demonstrations here:
 1. basic dlt framework - showing a simple example how to apply the same function to many tables, but breaking those tables into multiple pipelines
 2. basic workflow framework - basically doing the same thing as above, but applying the same notebook to many tables, and breaking those notebook runs into grouped workflows
 
+#### Setup
+Before you run any of the code, make sure you run the `_setup` notebook to create the upstream tables
+
 #### basic workflow framework
 1. Change the values in `_includes` notebook to match a catalog where you have sufficient privileges to create tables. If possible, use a new schema so you can just drop it at the end
-2. Run `_setup` to create the upstream tables
-3. Run `jobs_CRUD` to create the job definitions in the `workflows` subdirectory
-4. optional, uncommend the code to create a job, and see the output.
+2. Run `jobs_CRUD` to create the job definitions in the `workflows` subdirectory
+3. optional, uncommend the code to create a job, and see the output.
 
 #### basic DLT framework
 see this [example](https://docs.databricks.com/en/delta-live-tables/create-multiple-tables.html)
+1. Run `dlt_CRUD` to create the job definitions in the `workflows` subdirectory
+2. optional, uncommend the code to create a job, and see the output.
 
+#### teardown
+1. Edit the teardown script to refelct the schema you used for this project.
+1. Run the `__teardown script

@@ -3,7 +3,7 @@ import json
 
 # COMMAND ----------
 
-def define_pipeline(batches, batch, table, table_map):
+def define_pipeline(batches, batch, table, table_map, cluster_max):
     return {
         "pipeline_type": "WORKSPACE",
         "clusters": [
@@ -11,7 +11,7 @@ def define_pipeline(batches, batch, table, table_map):
                 "label": "default",
                 "autoscale": {
                     "min_workers": 1,
-                    "max_workers": 5,
+                    "max_workers": cluster_max,
                     "mode": "ENHANCED"
                 }
             },
@@ -49,12 +49,10 @@ batches
 # COMMAND ----------
 
 for batch in batches:
-  print(batch)
   table_map = {}
   for table in batches[batch]['tables']:
-    print(table)
     table_map[table] = batches[batch]['tables'][table]['target']
-  pipeline_def = define_pipeline(batches, batch, table, table_map)
+  pipeline_def = define_pipeline(batches, batch, table, table_map, batches[batch]['cluster']['num_workers'])
   with open(f"./pipelines/batch{batch}.json","w") as f:
     json.dump(pipeline_def, f, indent=2)
 
