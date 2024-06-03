@@ -15,3 +15,8 @@ target = dbutils.widgets.get('target')
   .mode('overwrite')
   .saveAsTable(target)
 )
+
+# COMMAND ----------
+
+# MAGIC %sql
+# MAGIC insert into control table "{source} update"
