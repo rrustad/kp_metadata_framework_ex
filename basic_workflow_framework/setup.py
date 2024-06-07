@@ -15,42 +15,51 @@ from datetime import datetime, timedelta
   [1, 'foo1', 'insert', datetime(year=2000, month=1, day=1),datetime(year=2000, month=1, day=1), 'NULL'],
   [2, 'foo2', 'insert', datetime(year=2000, month=1, day=1),datetime(year=2000, month=1, day=1), 'NULL'],
   [3, 'foo3', 'insert', datetime(year=2000, month=1, day=1),datetime(year=2000, month=1, day=1), 'NULL'],
-], schema="id integer, foo string, op string, AUD_LOAD_DT timestamp, AUD_OPERATION_TIME timestamp, AUD_OPERATION_OWNER string")
+], schema="tb1pk1 integer, foo string, op string, AUD_LOAD_DT timestamp, AUD_OPERATION_TIME timestamp, AUD_OPERATION_OWNER string")
 .write
 .mode('overwrite')
 .saveAsTable('kp_catalog.clarity_stg.table1')
  )
 
-# COMMAND ----------
+(spark.createDataFrame([
+  [1, 1, 'foo1', 'insert', datetime(year=2000, month=1, day=1),datetime(year=2000, month=1, day=1), 'NULL'],
+  [2, 2, 'foo2', 'insert', datetime(year=2000, month=1, day=1),datetime(year=2000, month=1, day=1), 'NULL'],
+  [3, 3, 'foo3', 'insert', datetime(year=2000, month=1, day=1),datetime(year=2000, month=1, day=1), 'NULL'],
+], schema="tb2pk1 integer, tb2pk2 integer, foo string, op string, AUD_LOAD_DT timestamp, AUD_OPERATION_TIME timestamp, AUD_OPERATION_OWNER string")
+.write
+.mode('overwrite')
+.saveAsTable('kp_catalog.clarity_stg.table2')
+ )
 
-# MAGIC %sql
-# MAGIC create or replace table kp_catalog.clarity_stg.table1_del
-# MAGIC (
-# MAGIC   id integer,
-# MAGIC   AUD_LOAD_DT timestamp,
-# MAGIC   AUD_OPERATION_TIME timestamp,
-# MAGIC   AUD_OPERATION_OWNER string
-# MAGIC   )
+(spark.createDataFrame([
+  [1, 1, 'foo1', 'insert', datetime(year=2000, month=1, day=1),datetime(year=2000, month=1, day=1), 'NULL'],
+  [2, 2, 'foo2', 'insert', datetime(year=2000, month=1, day=1),datetime(year=2000, month=1, day=1), 'NULL'],
+  [3, 3, 'foo3', 'insert', datetime(year=2000, month=1, day=1),datetime(year=2000, month=1, day=1), 'NULL'],
+], schema="tb3pk1 integer, tb3pk2 integer, foo string, op string, AUD_LOAD_DT timestamp, AUD_OPERATION_TIME timestamp, AUD_OPERATION_OWNER string")
+.write
+.mode('overwrite')
+.saveAsTable('kp_catalog.clarity_stg.table3')
+ )
 
-# COMMAND ----------
+(spark.createDataFrame([
+  [1, 'foo1', 'insert', datetime(year=2000, month=1, day=1),datetime(year=2000, month=1, day=1), 'NULL'],
+  [2, 'foo2', 'insert', datetime(year=2000, month=1, day=1),datetime(year=2000, month=1, day=1), 'NULL'],
+  [3, 'foo3', 'insert', datetime(year=2000, month=1, day=1),datetime(year=2000, month=1, day=1), 'NULL'],
+], schema="tb4pk1 integer, foo string, op string, AUD_LOAD_DT timestamp, AUD_OPERATION_TIME timestamp, AUD_OPERATION_OWNER string")
+.write
+.mode('overwrite')
+.saveAsTable('kp_catalog.clarity_stg.table4')
+ )
 
-def update_table(table_name, pk):
-  df = spark.table(table_name)
-  max_pk = df.select(f.max('id')).collect()[0][0]
-  
-  max_dt = df.select(f.max('AUD_LOAD_DT')).collect()[0][0]
-  max_dt_plus_one = (max_dt+timedelta(days=1)).strftime('%Y-%m-%d')
-  
-  foo = df.orderBy(f.rand()).limit(1).select('foo').collect()[0][0]
-
-  delete_pk = df.orderBy(f.rand()).limit(1).select('id').collect()[0][0]
-
-  spark.sql(f"insert into {table_name} (id, foo, op, AUD_LOAD_DT, AUD_OPERATION_TIME, AUD_OPERATION_OWNER) values ({max_pk}, '{foo}.1', 'update', '{max_dt_plus_one}', '{max_dt_plus_one}', 'NULL')") 
-  spark.sql(f"insert into {table_name} (id, foo, op, AUD_LOAD_DT, AUD_OPERATION_TIME, AUD_OPERATION_OWNER) values ({max_pk + 1}, 'foo{max_pk + 1}', 'insert', '{max_dt_plus_one}', '{max_dt_plus_one}', 'NULL')")
-  spark.sql(f"insert into {table_name}_del (id, AUD_LOAD_DT, AUD_OPERATION_TIME, AUD_OPERATION_OWNER) values ({delete_pk}, '{max_dt_plus_one}', '{max_dt_plus_one}', 'NULL')") 
-
-
-update_table('kp_catalog.clarity_stg.table1', 'id')
+(spark.createDataFrame([
+  [1,1,1, 'foo1', 'insert', datetime(year=2000, month=1, day=1),datetime(year=2000, month=1, day=1), 'NULL'],
+  [2,2,2, 'foo2', 'insert', datetime(year=2000, month=1, day=1),datetime(year=2000, month=1, day=1), 'NULL'],
+  [3,3,3, 'foo3', 'insert', datetime(year=2000, month=1, day=1),datetime(year=2000, month=1, day=1), 'NULL'],
+], schema="tb5pk1 integer,tb5pk2 integer,tb5pk3 integer, foo string, op string, AUD_LOAD_DT timestamp, AUD_OPERATION_TIME timestamp, AUD_OPERATION_OWNER string")
+.write
+.mode('overwrite')
+.saveAsTable('kp_catalog.clarity_stg.table5')
+ )
 
 # COMMAND ----------
 
@@ -60,7 +69,46 @@ update_table('kp_catalog.clarity_stg.table1', 'id')
 # COMMAND ----------
 
 # MAGIC %sql
-# MAGIC select * from kp_catalog.clarity_stg.table1_del
+# MAGIC create or replace table kp_catalog.clarity_stg.table1_del
+# MAGIC (
+# MAGIC   tb1pk1 integer,
+# MAGIC   AUD_LOAD_DT timestamp,
+# MAGIC   AUD_OPERATION_TIME timestamp,
+# MAGIC   AUD_OPERATION_OWNER string
+# MAGIC   );
+# MAGIC
+# MAGIC create or replace table kp_catalog.clarity_stg.table2_del
+# MAGIC (
+# MAGIC   tb2pk1 integer,
+# MAGIC   tb2pk2 integer,
+# MAGIC   AUD_LOAD_DT timestamp,
+# MAGIC   AUD_OPERATION_TIME timestamp,
+# MAGIC   AUD_OPERATION_OWNER string
+# MAGIC   );
+# MAGIC create or replace table kp_catalog.clarity_stg.table3_del
+# MAGIC (
+# MAGIC   tb3pk1 integer,
+# MAGIC   tb3pk2 integer,
+# MAGIC   AUD_LOAD_DT timestamp,
+# MAGIC   AUD_OPERATION_TIME timestamp,
+# MAGIC   AUD_OPERATION_OWNER string
+# MAGIC   );
+# MAGIC create or replace table kp_catalog.clarity_stg.table4_del
+# MAGIC (
+# MAGIC   tb4pk1 integer,
+# MAGIC   AUD_LOAD_DT timestamp,
+# MAGIC   AUD_OPERATION_TIME timestamp,
+# MAGIC   AUD_OPERATION_OWNER string
+# MAGIC   );
+# MAGIC create or replace table kp_catalog.clarity_stg.table5_del
+# MAGIC (
+# MAGIC   tb5pk1 integer,
+# MAGIC   tb5pk2 integer,
+# MAGIC   tb5pk3 integer,
+# MAGIC   AUD_LOAD_DT timestamp,
+# MAGIC   AUD_OPERATION_TIME timestamp,
+# MAGIC   AUD_OPERATION_OWNER string
+# MAGIC   )
 
 # COMMAND ----------
 

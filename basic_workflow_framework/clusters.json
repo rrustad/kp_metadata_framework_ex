@@ -1,0 +1,16 @@
+{
+  "1":{
+    "driver_pool_id":"0606-171311-jambs99-pool-oq26m1sv",
+    "worker_pool_id":"0606-171147-birds118-pool-5726wdy7",
+    "spark_version": "14.3.x-scala2.12",
+    "num_workers":1,
+    "policy_id": "000C91B24855E42E"
+  },
+  "2":{
+    "driver_pool_id":"0606-171311-jambs99-pool-oq26m1sv",
+    "worker_pool_id":"0606-171147-birds118-pool-5726wdy7",
+    "spark_version": "14.3.x-scala2.12",
+    "num_workers":2,
+    "policy_id": "000C91B24855E42E"
+  }
+}

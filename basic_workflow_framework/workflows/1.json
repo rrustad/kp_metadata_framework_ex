@@ -1,0 +1,143 @@
+{
+  "name": "clarity_ingest_1",
+  "tasks": [
+    {
+      "task_key": "table2_status_check",
+      "notebook_task": {
+        "notebook_path": "/Repos/riley.rustad@databricks.com/kp_metadata_framework_ex/basic_workflow_framework/check_status",
+        "base_parameters": {
+          "source_catalog": "kp_catalog",
+          "source_table": "table2"
+        },
+        "source": "WORKSPACE"
+      },
+      "job_cluster_key": "1_status_cluster",
+      "timeout_seconds": 14400,
+      "health": {
+        "rules": [
+          {
+            "metric": "RUN_DURATION_SECONDS",
+            "op": "GREATER_THAN",
+            "value": 3600
+          }
+        ]
+      }
+    },
+    {
+      "task_key": "table2_update",
+      "depends_on": [
+        {
+          "task_key": "table2_status_check"
+        }
+      ],
+      "run_if": "ALL_SUCCESS",
+      "notebook_task": {
+        "notebook_path": "/Repos/riley.rustad@databricks.com/kp_metadata_framework_ex/basic_workflow_framework/get_type1_data",
+        "base_parameters": {
+          "source_catalog": "kp_catalog",
+          "source_table_path": "kp_catalog.clarity_stg.table2",
+          "target_table_path": "kp_catalog.clarity_enr.table2",
+          "primary_keys": "tb2pk1,tb2pk2",
+          "audit_table_path": "kp_catalog.clarity_stg.",
+          "delete_table_path": "kp_catalog.clarity_stg.table2_del",
+          "table_name": "table2",
+          "checkpoints_path": "abfss://kp-external-location@oneenvadls.dfs.core.windows.net/clarity_ingest/checkpoints/"
+        },
+        "source": "WORKSPACE"
+      },
+      "job_cluster_key": "1_ingest_cluster",
+      "timeout_seconds": 3600,
+      "health": {
+        "rules": [
+          {
+            "metric": "RUN_DURATION_SECONDS",
+            "op": "GREATER_THAN",
+            "value": 1800.0
+          }
+        ]
+      }
+    },
+    {
+      "task_key": "table1_status_check",
+      "notebook_task": {
+        "notebook_path": "/Repos/riley.rustad@databricks.com/kp_metadata_framework_ex/basic_workflow_framework/check_status",
+        "base_parameters": {
+          "source_catalog": "kp_catalog",
+          "source_table": "table1"
+        },
+        "source": "WORKSPACE"
+      },
+      "job_cluster_key": "1_status_cluster",
+      "timeout_seconds": 14400,
+      "health": {
+        "rules": [
+          {
+            "metric": "RUN_DURATION_SECONDS",
+            "op": "GREATER_THAN",
+            "value": 3600
+          }
+        ]
+      }
+    },
+    {
+      "task_key": "table1_update",
+      "depends_on": [
+        {
+          "task_key": "table1_status_check"
+        }
+      ],
+      "run_if": "ALL_SUCCESS",
+      "notebook_task": {
+        "notebook_path": "/Repos/riley.rustad@databricks.com/kp_metadata_framework_ex/basic_workflow_framework/get_type1_data",
+        "base_parameters": {
+          "source_catalog": "kp_catalog",
+          "source_table_path": "kp_catalog.clarity_stg.table1",
+          "target_table_path": "kp_catalog.clarity_enr.table1",
+          "primary_keys": "tb1pk1",
+          "audit_table_path": "kp_catalog.clarity_stg.",
+          "delete_table_path": "kp_catalog.clarity_stg.table1_del",
+          "table_name": "table1",
+          "checkpoints_path": "abfss://kp-external-location@oneenvadls.dfs.core.windows.net/clarity_ingest/checkpoints/"
+        },
+        "source": "WORKSPACE"
+      },
+      "job_cluster_key": "1_ingest_cluster",
+      "timeout_seconds": 3600,
+      "health": {
+        "rules": [
+          {
+            "metric": "RUN_DURATION_SECONDS",
+            "op": "GREATER_THAN",
+            "value": 1800.0
+          }
+        ]
+      }
+    }
+  ],
+  "job_clusters": [
+    {
+      "job_cluster_key": "1_ingest_cluster",
+      "new_cluster": {
+        "spark_version": "14.3.x-scala2.12",
+        "instance_pool_id": "0606-171147-birds118-pool-5726wdy7",
+        "policy_id": "000C91B24855E42E",
+        "driver_instance_pool_id": "0606-171311-jambs99-pool-oq26m1sv",
+        "data_security_mode": "USER_ISOLATION",
+        "runtime_engine": "PHOTON",
+        "num_workers": 1
+      }
+    },
+    {
+      "job_cluster_key": "1_status_cluster",
+      "new_cluster": {
+        "spark_version": "14.3.x-scala2.12",
+        "instance_pool_id": "0606-171147-birds118-pool-5726wdy7",
+        "policy_id": "000C91B24855E42E",
+        "driver_instance_pool_id": "0606-171311-jambs99-pool-oq26m1sv",
+        "data_security_mode": "USER_ISOLATION",
+        "runtime_engine": "PHOTON",
+        "num_workers": 1
+      }
+    }
+  ]
+}

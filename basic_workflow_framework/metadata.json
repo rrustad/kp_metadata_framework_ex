@@ -2,37 +2,61 @@
   "1":{
     "tables":{
       "table1":{
-        "pk":"id_1",
-        "target":"table1_"
+        "primary_keys":"tb1pk1",
+        "source_schema":"clarity_stg",
+        "source_table":"table1",
+        "delete_table":"table1_del",
+        "target_schema": "clarity_enr",
+        "target_table":"table1",
+        "checkpoints_path":"abfss://kp-external-location@oneenvadls.dfs.core.windows.net/clarity_ingest/checkpoints/"
+        
       },
       "table2":{
-        "pk":"id_2",
-        "target":"table2_"
+        "primary_keys":"tb2pk1,tb2pk2",
+        "source_schema":"clarity_stg",
+        "source_table":"table2",
+        "delete_table":"table2_del",
+        "target_schema": "clarity_enr",
+        "target_table":"table2",
+        "checkpoints_path":"abfss://kp-external-location@oneenvadls.dfs.core.windows.net/clarity_ingest/checkpoints/"
+        
       }
     },
     "cluster":{
         "spark_version": "13.3.x-scala2.12",
         "instance_pool_id": "0802-143749-grail729-pool-hPaknFfC",
         "data_security_mode": "USER_ISOLATION",
-        "num_workers": 8
+        "num_workers": 2
     }
   },
   "2":{
     "tables":{
       "table3":{
-        "pk":"id_3",
-        "target":"table3_"
+        "primary_keys":"tb3pk1,tb3pk2",
+        "source_schema":"clarity_stg",
+        "source_table":"table3",
+        "delete_table":"table3_del",
+        "target_schema": "clarity_enr",
+        "target_table":"table3",
+        "checkpoints_path":"abfss://kp-external-location@oneenvadls.dfs.core.windows.net/clarity_ingest/checkpoints/"
+        
       },
       "table4":{
-        "pk":"id_4",
-        "target":"table4_"
+        "primary_keys":"tb4pk1",
+        "source_schema":"clarity_stg",
+        "source_table":"table4",
+        "delete_table":"table4_del",
+        "target_schema": "clarity_enr",
+        "target_table":"table4",
+        "checkpoints_path":"abfss://kp-external-location@oneenvadls.dfs.core.windows.net/clarity_ingest/checkpoints/"
+        
       }
     },
     "cluster":{
         "spark_version": "13.3.x-scala2.12",
         "instance_pool_id": "0802-143749-grail729-pool-hPaknFfC",
         "data_security_mode": "USER_ISOLATION",
-        "num_workers": 4
+        "num_workers": 1
     }
   }
 }
